@@ -1,7 +1,7 @@
 import React from 'react';
 import ReadMore from './ReadMore';
 import { storiesOf, action } from '@storybook/react';
-import { Wrapper } from './storybook';
+import './storybook.scss';
 
 const Text = `
         Lorem ipsum dolor sit amet, consectetur adippscing elit. Duis eu neque lacus. Mauris
@@ -20,7 +20,7 @@ const Text = `
         consectetur ipsum nec sem eleifend ultricies.`;
 
 storiesOf('Read more', module)
-  .addDecorator((storyFn) => <Wrapper>{storyFn()}</Wrapper>)
+  .addDecorator((storyFn) => <div className='wrapper'>{storyFn()}</div>)
   .add('max characters', () => (
     <ReadMore maxCharacters={50} readMoreLabel='read more' readLessLabel='read less'>
       {Text}
@@ -32,7 +32,7 @@ storiesOf('Read more', module)
     </ReadMore>
   ))
   .add('max lines', () => (
-    <ReadMore maxLines={2} readMoreLabel='read more' readLessLabel='read less'>
+    <ReadMore maxLines={5} readMoreLabel='read more' readLessLabel='read less'>
       {Text}
     </ReadMore>
   ));
