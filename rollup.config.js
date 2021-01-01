@@ -19,8 +19,8 @@ export default [
     input,
     output: {
       file: pkg.module,
-      format: 'esm',
-      sourcemap: true,
+      format: 'es',
+      sourcemap: 'inline',
     },
     plugins,
     external,
@@ -29,8 +29,8 @@ export default [
     input,
     output: {
       file: pkg.main,
-      format: 'cjs',
-      sourcemap: true,
+      format: 'es',
+      sourcemap: 'inline',
     },
     plugins,
     external,
