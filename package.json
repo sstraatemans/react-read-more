@@ -4,12 +4,11 @@
   "description": "a readmore component with multiple options",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:clean && npm run build:ts",
     "build:ts": "npx rollup -c",
     "build:clean": "rm -rf ./dist/*",
     "test": "jest",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "start": "start-storybook -p 6006",
+    "build": "build-storybook"
   },
   "author": "Steven Straatemans <steven@straatemans.nl>",
   "license": "ISC",
