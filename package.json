@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:ts": "npx rollup -c",
-    "build:clean": "rm -rf ./dist/*",
     "test": "jest",
-    "start": "start-storybook -p 6006",
-    "build": "build-storybook"
+    "start": "start-storybook",
+    "build": "build-storybook -c .storybook -o public"
   },
   "author": "Steven Straatemans <steven@straatemans.nl>",
   "license": "ISC",
