@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "jest": "jest",
     "jest:watch": "jest --watch",
+    "jest:coverage": "jest --coverage",
     "lint": "eslint . --cache --ext js,jsx,ts,tsx",
     "test": "npm run lint && npm run typecheck && npm run jest"
   },
