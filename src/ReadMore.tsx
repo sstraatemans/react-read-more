@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
+
+import './ReadMore.scss';
+import { useMaxCharacters } from './hooks/useMaxCharacters';
+import { useMaxWords } from './hooks/useMaxWords';
+import { useMaxLines } from './hooks/useMaxLines';
 
 interface iBase {
     children: string;
@@ -33,47 +38,25 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     maxLines,
     ellipsis = '...',
 }) => {
-    const readMoreRef = useRef<HTMLDivElement | null>(null);
-    const buttonRef = useRef<HTMLDivElement | null>(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [text, setText] = useState<string>(children);
-
-    const getLineHeight = (str) => {};
-
-    const createElement = () => {};
-
-    useEffect(() => {
-        if (isOpen) {
-            setText(children);
-        } else {
-            if (maxCharacters) {
-                setText(text.substring(0, maxCharacters));
-            }
-            if (maxWords) {
-                const wordsArray = text.split(' ');
-                setText(wordsArray.slice(0, maxWords).join(' '));
-            }
-            if (maxLines) {
-            }
-        }
-    }, [isOpen]);
+    const [text, setText] = useState<string>('');
+    useMaxCharacters(maxCharacters, isOpen, children, setText);
+    useMaxWords(maxWords, isOpen, children, setText);
+    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
 
     const handleClick = () => {
         setIsOpen((v) => !v);
     };
 
-    const getLabel = (open: boolean): string => {
-        return isOpen ? readLessLabel : readMoreLabel;
-    };
+    const getLabel = isOpen ? readLessLabel : readMoreLabel;
 
     return (
         <div ref={readMoreRef}>
             {text}
-
             <span ref={buttonRef}>
                 {ellipsis}
-                <button type="button" onClick={handleClick}>
-                    {getLabel(isOpen)}
+                <button className="button" type="button" onClick={handleClick}>
+                    {getLabel}
                 </button>
             </span>
         </div>

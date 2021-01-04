@@ -1,0 +1,6 @@
+# tasks/**/*.js
+babel.config.js
+jest.config.js
+_dist
+coverage
+node_modules
