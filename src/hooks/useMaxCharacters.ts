@@ -11,7 +11,7 @@ export const useMaxCharacters = (
             if (isOpen) {
                 setText(children);
             } else {
-                setText(children.substring(0, maxCharacters));
+                setText(children.trim().substring(0, maxCharacters));
             }
         }
     }, [maxCharacters, isOpen]);

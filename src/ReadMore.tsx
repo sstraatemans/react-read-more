@@ -1,38 +1,14 @@
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
-
-import './ReadMore.scss';
+import React, { PropsWithChildren, useState } from 'react';
 import { useMaxCharacters } from './hooks/useMaxCharacters';
 import { useMaxWords } from './hooks/useMaxWords';
 import { useMaxLines } from './hooks/useMaxLines';
-
-interface iBase {
-    children: string;
-    readMoreLabel: string;
-    readLessLabel: string;
-    maxCharacters?: number;
-    maxWords?: number;
-    maxLines?: number;
-    ellipsis?: string;
-}
-
-interface iMaxChars extends iBase {
-    maxCharacters: number;
-}
-
-interface iMaxWords extends iBase {
-    maxWords: number;
-}
-
-interface iMaxLines extends iBase {
-    maxLines: number;
-}
-
-type iProps = iMaxChars | iMaxWords | iMaxLines;
+import { iProps } from './types';
+import './ReadMore.scss';
 
 const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     children,
-    readMoreLabel,
-    readLessLabel,
+    readMoreLabel = 'read more',
+    readLessLabel = 'read less',
     maxCharacters,
     maxWords,
     maxLines,
@@ -40,9 +16,9 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState<string>('');
+    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
     useMaxCharacters(maxCharacters, isOpen, children, setText);
     useMaxWords(maxWords, isOpen, children, setText);
-    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
 
     const handleClick = () => {
         setIsOpen((v) => !v);
@@ -51,11 +27,11 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     const getLabel = isOpen ? readLessLabel : readMoreLabel;
 
     return (
-        <div ref={readMoreRef}>
+        <div ref={readMoreRef} data-testid="wrapper">
             {text}
-            <span ref={buttonRef}>
+            <span ref={buttonRef} data-testid="button-wrapper">
                 {ellipsis}
-                <button className="button" type="button" onClick={handleClick}>
+                <button data-testid="button" className="button" type="button" onClick={handleClick}>
                     {getLabel}
                 </button>
             </span>

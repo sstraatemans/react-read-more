@@ -8,7 +8,7 @@ interface iStory<P = unknown> extends React.VFC<P> {
     storyName: string;
 }
 
-const Text = `
+export const Text = `
         Lorem ipsum dolor sit amet, consectetur adippscing elit. Duis eu neque lacus. Mauris
         scelerisque sed arcu vel pharetra. Aenean nec nulla sed nulla viverra cursus at et lacus.
         Etiam accumsan turpis ac consequat sodales. In sollicitudin egestas arcu, et vulputate nunc
@@ -34,15 +34,33 @@ const Template = (args) => <ReadMore {...args}>{Text}</ReadMore>;
 
 export const MaxCharacters: iStory = Template.bind({});
 MaxCharacters.storyName = 'Max Characters';
-MaxCharacters.args = { readMoreLabel: 'read more', maxCharacters: 50, readLessLabel: 'read less' };
+MaxCharacters.args = {
+    readMoreLabel: 'read more',
+    maxCharacters: 50,
+    maxLines: null,
+    maxWords: null,
+    readLessLabel: 'read less',
+};
 
 export const MaxWords: iStory = Template.bind({});
 MaxWords.storyName = 'Max Words';
-MaxWords.args = { readMoreLabel: 'read more', maxWords: 20, readLessLabel: 'read less' };
+MaxWords.args = {
+    readMoreLabel: 'read more',
+    maxWords: 20,
+    maxLines: null,
+    maxCharacters: null,
+    readLessLabel: 'read less',
+};
 
 export const MaxLines: iStory = Template.bind({});
 MaxLines.storyName = 'Max Lines';
-MaxLines.args = { readMoreLabel: 'read more', maxLines: 2, readLessLabel: 'read less' };
+MaxLines.args = {
+    readMoreLabel: 'read more',
+    maxWords: null,
+    maxLines: 2,
+    maxCharacters: null,
+    readLessLabel: 'read less',
+};
 
 export default {
     title: 'ReadMore',
