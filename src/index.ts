@@ -1,2 +1,3 @@
-import  ReadMore  from './ReadMore';
+import ReadMore from './ReadMore';
+
 export default ReadMore;
