@@ -8,7 +8,7 @@ interface iStory<P = unknown> extends React.VFC<P> {
     storyName: string;
 }
 
-const Text = `
+export const Text = `
         Lorem ipsum dolor sit amet, consectetur adippscing elit. Duis eu neque lacus. Mauris
         scelerisque sed arcu vel pharetra. Aenean nec nulla sed nulla viverra cursus at et lacus.
         Etiam accumsan turpis ac consequat sodales. In sollicitudin egestas arcu, et vulputate nunc

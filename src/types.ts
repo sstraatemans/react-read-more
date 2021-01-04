@@ -1,7 +1,7 @@
 interface iBase {
     children: string;
-    readMoreLabel: string;
-    readLessLabel: string;
+    readMoreLabel?: string;
+    readLessLabel?: string;
     maxCharacters?: number;
     maxWords?: number;
     maxLines?: number;

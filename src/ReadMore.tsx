@@ -7,8 +7,8 @@ import './ReadMore.scss';
 
 const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     children,
-    readMoreLabel,
-    readLessLabel,
+    readMoreLabel = 'read more',
+    readLessLabel = 'read less',
     maxCharacters,
     maxWords,
     maxLines,
