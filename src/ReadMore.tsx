@@ -27,11 +27,11 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     const getLabel = isOpen ? readLessLabel : readMoreLabel;
 
     return (
-        <div ref={readMoreRef}>
+        <div ref={readMoreRef} data-testid="wrapper">
             {text}
-            <span ref={buttonRef}>
+            <span ref={buttonRef} data-testid="button-wrapper">
                 {ellipsis}
-                <button className="button" type="button" onClick={handleClick}>
+                <button data-testid="button" className="button" type="button" onClick={handleClick}>
                     {getLabel}
                 </button>
             </span>

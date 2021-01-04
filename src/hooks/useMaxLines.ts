@@ -23,7 +23,7 @@ export const useMaxLines = (
 
         let line = '';
 
-        const wordArray: string[] = children.split(' ');
+        const wordArray: string[] = children.trim().split(' ');
 
         // you have to check by line, because when a word is to long for that line, all characters will jump to next line
         // if checking the last line, we need to take into account the width of the button
