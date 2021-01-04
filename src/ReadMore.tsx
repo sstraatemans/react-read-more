@@ -1,33 +1,9 @@
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
-
-import './ReadMore.scss';
+import React, { PropsWithChildren, useState } from 'react';
 import { useMaxCharacters } from './hooks/useMaxCharacters';
 import { useMaxWords } from './hooks/useMaxWords';
 import { useMaxLines } from './hooks/useMaxLines';
-
-interface iBase {
-    children: string;
-    readMoreLabel: string;
-    readLessLabel: string;
-    maxCharacters?: number;
-    maxWords?: number;
-    maxLines?: number;
-    ellipsis?: string;
-}
-
-interface iMaxChars extends iBase {
-    maxCharacters: number;
-}
-
-interface iMaxWords extends iBase {
-    maxWords: number;
-}
-
-interface iMaxLines extends iBase {
-    maxLines: number;
-}
-
-type iProps = iMaxChars | iMaxWords | iMaxLines;
+import { iProps } from './types';
+import './ReadMore.scss';
 
 const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     children,
@@ -40,9 +16,9 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState<string>('');
+    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
     useMaxCharacters(maxCharacters, isOpen, children, setText);
     useMaxWords(maxWords, isOpen, children, setText);
-    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
 
     const handleClick = () => {
         setIsOpen((v) => !v);

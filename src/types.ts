@@ -1,5 +1,3 @@
-import React, { PropsWithChildren } from 'react';
-
 interface iBase {
     children: string;
     readMoreLabel: string;
@@ -18,6 +16,4 @@ interface iMaxWords extends iBase {
 interface iMaxLines extends iBase {
     maxLines: number;
 }
-declare type iProps = iMaxChars | iMaxWords | iMaxLines;
-declare const ReadMore: React.FC<PropsWithChildren<iProps>>;
-export default ReadMore;
+export type iProps = iMaxChars | iMaxWords | iMaxLines;
