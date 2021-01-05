@@ -109,6 +109,22 @@ ChooseClassName.args = {
     maxLines: 3,
 };
 
+export const ChooseLabels: iStory = Template.bind({});
+ChooseLabels.storyName = 'Overwrite default labels';
+ChooseLabels.argTypes = {
+    ...defaultArgs,
+    readMoreLabel: {
+        control: { type: 'text' },
+    },
+    readLessLabel: {
+        control: { type: 'text' },
+    },
+    ellipsis: {
+        control: { type: 'text' },
+    },
+};
+ChooseLabels.args = { maxLines: 3 };
+
 export default {
     title: 'ReadMore',
     component: ReadMore,
