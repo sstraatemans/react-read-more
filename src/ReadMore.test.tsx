@@ -83,4 +83,14 @@ describe('ReadMore Component', () => {
 
         expect(screen.getByTestId('button-wrapper')).toHaveTextContent('...read more');
     });
+
+    it('should add className for the buttons', () => {
+        render(
+            <ReadMore maxCharacters={8} buttonClassName="testClass">
+                {Text}
+            </ReadMore>,
+        );
+
+        expect(screen.getByTestId('button').className).toEqual('button testClass');
+    });
 });
