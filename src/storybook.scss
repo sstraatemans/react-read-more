@@ -1,3 +1,23 @@
 .wrapper {
-  width: 60%;
+    width: 60%;
+}
+
+.button-class-button {
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: lightblue;
+}
+
+.button-class-withicon {
+    border: 1px solid black;
+    text-decoration: none;
+
+    &::before {
+        content: '🦊';
+        padding-right: 5px;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

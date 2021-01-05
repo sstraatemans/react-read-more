@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
+import classNames from 'classnames';
 import { useMaxCharacters } from './hooks/useMaxCharacters';
 import { useMaxWords } from './hooks/useMaxWords';
 import { useMaxLines } from './hooks/useMaxLines';
@@ -13,6 +14,7 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     maxWords,
     maxLines,
     ellipsis = '...',
+    buttonClassName,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState<string>('');
@@ -31,7 +33,12 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
             {text}
             <span ref={buttonRef} data-testid="button-wrapper">
                 {ellipsis}
-                <button data-testid="button" className="button" type="button" onClick={handleClick}>
+                <button
+                    data-testid="button"
+                    className={classNames('button', buttonClassName)}
+                    type="button"
+                    onClick={handleClick}
+                >
                     {getLabel}
                 </button>
             </span>

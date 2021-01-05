@@ -6,6 +6,7 @@ interface iBase {
     maxWords?: number;
     maxLines?: number;
     ellipsis?: string;
+    buttonClassName?: string;
 }
 interface iMaxChars extends iBase {
     maxCharacters: number;

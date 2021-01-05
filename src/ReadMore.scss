@@ -3,12 +3,12 @@
     background-color: transparent;
     text-decoration: underline;
     cursor: pointer;
-}
 
-.button::first-letter {
-    text-transform: uppercase;
-}
+    &::first-letter {
+        text-transform: uppercase;
+    }
 
-.button:hover {
-    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 }

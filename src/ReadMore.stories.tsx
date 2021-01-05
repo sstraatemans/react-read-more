@@ -7,6 +7,17 @@ import { Text } from './Text';
 interface iStory<P = unknown> extends React.VFC<P> {
     args: { [key: string]: string | number };
     storyName: string;
+    argTypes: {
+        [key: string]: {
+            control?: {
+                type: string;
+                options?: string[] | string | number;
+            };
+            table?: {
+                disable: boolean;
+            };
+        };
+    };
 }
 
 const templateDecorator = (Story) => (
@@ -17,34 +28,85 @@ const templateDecorator = (Story) => (
 
 const Template = (args) => <ReadMore {...args}>{Text}</ReadMore>;
 
+const defaultArgs = {
+    maxWords: {
+        table: { disable: true },
+    },
+    maxCharacters: {
+        table: { disable: true },
+    },
+    readMoreLabel: {
+        table: { disable: true },
+    },
+    readLessLabel: {
+        table: { disable: true },
+    },
+    maxLines: {
+        table: { disable: true },
+    },
+    ellipsis: {
+        table: { disable: true },
+    },
+    buttonClassName: {
+        table: { disable: true },
+    },
+};
+
 export const MaxCharacters: iStory = Template.bind({});
 MaxCharacters.storyName = 'Max Characters';
+MaxCharacters.argTypes = {
+    ...defaultArgs,
+    maxCharacters: {
+        control: {
+            type: 'number',
+        },
+    },
+};
 MaxCharacters.args = {
-    readMoreLabel: 'read more',
     maxCharacters: 50,
-    maxLines: null,
-    maxWords: null,
-    readLessLabel: 'read less',
 };
 
 export const MaxWords: iStory = Template.bind({});
 MaxWords.storyName = 'Max Words';
+MaxWords.argTypes = {
+    ...defaultArgs,
+    maxWords: {
+        control: {
+            type: 'number',
+        },
+    },
+};
 MaxWords.args = {
-    readMoreLabel: 'read more',
     maxWords: 20,
-    maxLines: null,
-    maxCharacters: null,
-    readLessLabel: 'read less',
 };
 
 export const MaxLines: iStory = Template.bind({});
 MaxLines.storyName = 'Max Lines';
+MaxLines.argTypes = {
+    ...defaultArgs,
+    maxLines: {
+        control: {
+            type: 'number',
+        },
+    },
+};
 MaxLines.args = {
-    readMoreLabel: 'read more',
-    maxWords: null,
-    maxLines: 2,
-    maxCharacters: null,
-    readLessLabel: 'read less',
+    maxLines: 3,
+};
+
+export const ChooseClassName: iStory = Template.bind({});
+ChooseClassName.storyName = 'Overwrite button style';
+ChooseClassName.argTypes = {
+    ...defaultArgs,
+    buttonClassName: {
+        control: {
+            type: 'select',
+            options: ['button-class-button', 'button-class-withicon'],
+        },
+    },
+};
+ChooseClassName.args = {
+    maxLines: 3,
 };
 
 export default {
