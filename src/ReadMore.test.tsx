@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -81,5 +82,15 @@ describe('ReadMore Component', () => {
         render(<ReadMore maxCharacters={8}>{Text}</ReadMore>);
 
         expect(screen.getByTestId('button-wrapper')).toHaveTextContent('...read more');
+    });
+
+    it('should add className for the buttons', () => {
+        render(
+            <ReadMore maxCharacters={8} buttonClassName="testClass">
+                {Text}
+            </ReadMore>,
+        );
+
+        expect(screen.getByTestId('button').className).toEqual('button testClass');
     });
 });
