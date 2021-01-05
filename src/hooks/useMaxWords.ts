@@ -12,7 +12,7 @@ export const useMaxWords = (
                 setText(children);
             } else {
                 const wordsArray = children.trim().split(' ');
-                setText(wordsArray.slice(0, maxWords).join(' '));
+                setText(wordsArray.slice(0, maxWords).join(' ').trim());
             }
         }
     }, [maxWords, isOpen, children]);

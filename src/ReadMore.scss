@@ -1,4 +1,14 @@
 .button {
-  border: 0;
-  background-color: green;
+    border: 0;
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.button::first-letter {
+    text-transform: uppercase;
+}
+
+.button:hover {
+    text-decoration: none;
 }
