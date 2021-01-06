@@ -1,7 +1,7 @@
 {
   "name": "react-readmore",
   "version": "1.0.0",
-  "description": "a readmore component with multiple options",
+  "description": "a fully customizable read more component for React",
   "main": "index.js",
   "scripts": {
     "build:ts": "npx rollup -c",
@@ -15,7 +15,7 @@
     "test": "npm run lint && npm run typecheck && npm run jest"
   },
   "author": "Steven Straatemans <steven@straatemans.nl>",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
