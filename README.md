@@ -1,5 +1,8 @@
 <p align="center">
   <b>React Read More</b> is a simple, fully customizable component which gives you the ability to truncate a large text, by line, character or word count.
+ <br/>
+  <img alt="npm" src="https://img.shields.io/npm/v/@sstraatemans/react-readmore">
+  <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/@sstraatemans/react-readmore">
 </p>
 
 ## Install
