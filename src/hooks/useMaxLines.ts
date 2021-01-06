@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { debounce } from 'lodash';
+import { useEffect, useRef } from 'react';
+import debounce from 'lodash/debounce';
 
 export const useMaxLines = (
     maxLines: number,
