@@ -1,0 +1,14 @@
+src
+coverage
+public
+build
+.github
+.storybook
+.eslintcache
+.eslintignore  
+.eslintrc  
+.prettierrc  
+__mocks__
+jest.config.js  
+rollup.config.js
+tsconfig.json   
