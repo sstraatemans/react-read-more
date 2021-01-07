@@ -5,8 +5,6 @@ import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
 import cleanup from 'rollup-plugin-cleanup';
 
-const packageJson = require('./package.json');
-
 export default {
     input: 'src/index.ts',
     output: [

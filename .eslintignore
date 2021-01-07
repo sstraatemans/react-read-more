@@ -4,3 +4,6 @@ jest.config.js
 _dist
 coverage
 node_modules
+public
+build
+dist

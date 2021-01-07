@@ -12,7 +12,7 @@ export const useMaxLines = (
 
     const getButtonWidth = () => buttonRef.current?.offsetWidth ?? 0;
 
-    const getClientWidth = () => readMoreRef.current.clientWidth ?? 0;
+    const getClientWidth = () => readMoreRef.current?.clientWidth ?? 0;
 
     const createMaxLines = () => {
         const ruler = document.createElement('div');

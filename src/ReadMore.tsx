@@ -5,6 +5,7 @@ import { useMaxWords } from './hooks/useMaxWords';
 import { useMaxLines } from './hooks/useMaxLines';
 import { iProps } from './types';
 import './ReadMore.scss';
+import { isAllText } from './utils';
 
 const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     children,
@@ -24,7 +25,7 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     useMaxWords(maxWords, isOpen, children, setText);
 
     useEffect(() => {
-        if (isOpen || (text && text.trim().length < children.trim().length)) {
+        if (isOpen || isAllText(text, children)) {
             setShowButton(true);
             return;
         }
