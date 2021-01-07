@@ -17,7 +17,6 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     ellipsis = '...',
     buttonClassName,
 }) => {
-    const [showButton, setShowButton] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState<string>('');
     const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
@@ -25,12 +24,10 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     useMaxWords(maxWords, isOpen, children, setText);
 
     useEffect(() => {
-        if (isOpen || isAllText(text, children)) {
-            setShowButton(true);
-            return;
+        if (!isOpen && isAllText(text, children)) {
+            buttonRef.current?.parentElement.removeChild(buttonRef.current);
         }
-        setShowButton(false);
-    }, [isOpen, text, maxLines, maxWords, maxCharacters]);
+    }, [text, maxLines, maxWords, maxCharacters]);
 
     const handleClick = () => {
         setIsOpen((v) => !v);
@@ -40,19 +37,18 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     return (
         <div ref={readMoreRef} data-testid="wrapper">
             {text}
-            {showButton && (
-                <span ref={buttonRef} data-testid="button-wrapper">
-                    {ellipsis}
-                    <button
-                        data-testid="button"
-                        className={classNames('button', buttonClassName)}
-                        type="button"
-                        onClick={handleClick}
-                    >
-                        {getLabel}
-                    </button>
-                </span>
-            )}
+
+            <span ref={buttonRef} data-testid="button-wrapper">
+                {ellipsis}
+                <button
+                    data-testid="button"
+                    className={classNames('button', buttonClassName)}
+                    type="button"
+                    onClick={handleClick}
+                >
+                    {getLabel}
+                </button>
+            </span>
         </div>
     );
 };

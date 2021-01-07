@@ -11,7 +11,10 @@ export const useMaxWords = (
             if (isOpen) {
                 setText(children);
             } else {
-                const wordsArray = children.trim().split(' ');
+                const wordsArray = children
+                    .trim()
+                    .split(' ')
+                    .filter((c) => c !== '');
                 setText(wordsArray.slice(0, maxWords).join(' ').trim());
             }
         }

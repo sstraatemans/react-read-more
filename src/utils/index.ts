@@ -4,7 +4,7 @@ export const isAllText = (truncatedText, text) => {
         truncatedText
             .trim()
             .split('')
-            .filter((c) => c !== ' ').length <
+            .filter((c) => c !== ' ').length ===
             text
                 .trim()
                 .split('')

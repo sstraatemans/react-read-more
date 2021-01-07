@@ -9,9 +9,7 @@ export const useMaxLines = (
 ) => {
     const readMoreRef = useRef<HTMLDivElement | null>(null);
     const buttonRef = useRef<HTMLDivElement | null>(null);
-
     const getButtonWidth = () => buttonRef.current?.offsetWidth ?? 0;
-
     const getClientWidth = () => readMoreRef.current?.clientWidth ?? 0;
 
     const createMaxLines = () => {
@@ -23,7 +21,10 @@ export const useMaxLines = (
 
         let line = '';
 
-        const wordArray: string[] = children.trim().split(' ');
+        const wordArray: string[] = children
+            .trim()
+            .split(' ')
+            .filter((c) => c !== '');
 
         // you have to check by line, because when a word is to long for that line, all characters will jump to next line
         // if checking the last line, we need to take into account the width of the button
