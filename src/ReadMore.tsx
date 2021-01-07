@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useMaxCharacters } from './hooks/useMaxCharacters';
 import { useMaxWords } from './hooks/useMaxWords';
@@ -16,11 +16,20 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     ellipsis = '...',
     buttonClassName,
 }) => {
+    const [showButton, setShowButton] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState<string>('');
     const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
     useMaxCharacters(maxCharacters, isOpen, children, setText);
     useMaxWords(maxWords, isOpen, children, setText);
+
+    useEffect(() => {
+        if (text && text.length <= children.length) {
+            setShowButton(true);
+            return;
+        }
+        setShowButton(false);
+    }, [text]);
 
     const handleClick = () => {
         setIsOpen((v) => !v);
