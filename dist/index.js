@@ -59,7 +59,10 @@ var classnames = createCommonjsModule(function (module) {
                 setText(children);
             }
             else {
-                var wordsArray = children.trim().split(' ');
+                var wordsArray = children
+                    .trim()
+                    .split(' ')
+                    .filter(function (c) { return c !== ''; });
                 setText(wordsArray.slice(0, maxWords).join(' ').trim());
             }
         }
@@ -260,7 +263,10 @@ var debounce_1 = debounce;var useMaxLines = function (maxLines, isOpen, children
         ruler.style.whiteSpace = 'nowrap';
         (_a = readMoreRef.current) === null || _a === void 0 ? void 0 : _a.appendChild(ruler);
         var line = '';
-        var wordArray = children.trim().split(' ');
+        var wordArray = children
+            .trim()
+            .split(' ')
+            .filter(function (c) { return c !== ''; });
         // you have to check by line, because when a word is to long for that line, all characters will jump to next line
         // if checking the last line, we need to take into account the width of the button
         for (var j = 0; j < maxLines; j += 1) {
@@ -337,33 +343,31 @@ styleInject(css_248z);var isAllText = function (truncatedText, text) {
         truncatedText
             .trim()
             .split('')
-            .filter(function (c) { return c !== ' '; }).length <
+            .filter(function (c) { return c !== ' '; }).length ===
             text
                 .trim()
                 .split('')
                 .filter(function (c) { return c !== ' '; }).length);
 };var ReadMore = function (_a) {
     var children = _a.children, _b = _a.readMoreLabel, readMoreLabel = _b === void 0 ? 'read more' : _b, _c = _a.readLessLabel, readLessLabel = _c === void 0 ? 'read less' : _c, maxCharacters = _a.maxCharacters, maxWords = _a.maxWords, maxLines = _a.maxLines, _d = _a.ellipsis, ellipsis = _d === void 0 ? '...' : _d, buttonClassName = _a.buttonClassName;
-    var _e = useState(false), showButton = _e[0], setShowButton = _e[1];
-    var _f = useState(false), isOpen = _f[0], setIsOpen = _f[1];
-    var _g = useState(''), text = _g[0], setText = _g[1];
-    var _h = useMaxLines(maxLines, isOpen, children, setText), readMoreRef = _h.readMoreRef, buttonRef = _h.buttonRef;
+    var _e = useState(false), isOpen = _e[0], setIsOpen = _e[1];
+    var _f = useState(''), text = _f[0], setText = _f[1];
+    var _g = useMaxLines(maxLines, isOpen, children, setText), readMoreRef = _g.readMoreRef, buttonRef = _g.buttonRef;
     useMaxCharacters(maxCharacters, isOpen, children, setText);
     useMaxWords(maxWords, isOpen, children, setText);
     useEffect(function () {
-        if (isOpen || isAllText(text, children)) {
-            setShowButton(true);
-            return;
+        var _a;
+        if (!isOpen && isAllText(text, children)) {
+            (_a = buttonRef.current) === null || _a === void 0 ? void 0 : _a.parentElement.removeChild(buttonRef.current);
         }
-        setShowButton(false);
-    }, [isOpen, text, maxLines, maxWords, maxCharacters]);
+    }, [text, maxLines, maxWords, maxCharacters]);
     var handleClick = function () {
         setIsOpen(function (v) { return !v; });
     };
     var getLabel = isOpen ? readLessLabel : readMoreLabel;
     return (React.createElement("div", { ref: readMoreRef, "data-testid": "wrapper" },
         text,
-        showButton && (React.createElement("span", { ref: buttonRef, "data-testid": "button-wrapper" },
+        React.createElement("span", { ref: buttonRef, "data-testid": "button-wrapper" },
             ellipsis,
-            React.createElement("button", { "data-testid": "button", className: classnames('button', buttonClassName), type: "button", onClick: handleClick }, getLabel)))));
+            React.createElement("button", { "data-testid": "button", className: classnames('button', buttonClassName), type: "button", onClick: handleClick }, getLabel))));
 };export default ReadMore;
