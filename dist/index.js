@@ -1,4 +1,47 @@
-import React,{useEffect,useRef,useState}from'react';import classNames from'classnames';var useMaxCharacters = function (maxCharacters, isOpen, children, setText) {
+import React,{useEffect,useRef,useState}from'react';var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+var classnames = createCommonjsModule(function (module) {
+(function () {
+	var hasOwn = {}.hasOwnProperty;
+	function classNames () {
+		var classes = [];
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+			var argType = typeof arg;
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+		return classes.join(' ');
+	}
+	if ( module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});var useMaxCharacters = function (maxCharacters, isOpen, children, setText) {
     useEffect(function () {
         if (maxCharacters) {
             if (isOpen) {
@@ -25,7 +68,7 @@ import React,{useEffect,useRef,useState}from'react';import classNames from'class
   var type = typeof value;
   return value != null && (type == 'object' || type == 'function');
 }
-var isObject_1 = isObject;var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+var isObject_1 = isObject;var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 var _freeGlobal = freeGlobal;var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 var root = _freeGlobal || freeSelf || Function('return this')();
 var _root = root;var now = function() {
@@ -207,8 +250,8 @@ function debounce(func, wait, options) {
 var debounce_1 = debounce;var useMaxLines = function (maxLines, isOpen, children, setText) {
     var readMoreRef = useRef(null);
     var buttonRef = useRef(null);
-    var getButtonWidth = function () { var _a; return (_a = buttonRef.current.offsetWidth) !== null && _a !== void 0 ? _a : 0; };
-    var getClientWidth = function () { var _a; return (_a = readMoreRef.current.clientWidth) !== null && _a !== void 0 ? _a : 0; };
+    var getButtonWidth = function () { var _a, _b; return (_b = (_a = buttonRef.current) === null || _a === void 0 ? void 0 : _a.offsetWidth) !== null && _b !== void 0 ? _b : 0; };
+    var getClientWidth = function () { var _a, _b; return (_b = (_a = readMoreRef.current) === null || _a === void 0 ? void 0 : _a.clientWidth) !== null && _b !== void 0 ? _b : 0; };
     var createMaxLines = function () {
         var _a, _b;
         var ruler = document.createElement('div');
@@ -289,20 +332,38 @@ var debounce_1 = debounce;var useMaxLines = function (maxLines, isOpen, children
     style.appendChild(document.createTextNode(css));
   }
 }var css_248z = ".button {\n  border: 0;\n  background-color: transparent;\n  text-decoration: underline;\n  cursor: pointer; }\n  .button::first-letter {\n    text-transform: uppercase; }\n  .button:hover {\n    text-decoration: none; }\n";
-styleInject(css_248z);var ReadMore = function (_a) {
+styleInject(css_248z);var isAllText = function (truncatedText, text) {
+    return (truncatedText &&
+        truncatedText
+            .trim()
+            .split('')
+            .filter(function (c) { return c !== ' '; }).length <
+            text
+                .trim()
+                .split('')
+                .filter(function (c) { return c !== ' '; }).length);
+};var ReadMore = function (_a) {
     var children = _a.children, _b = _a.readMoreLabel, readMoreLabel = _b === void 0 ? 'read more' : _b, _c = _a.readLessLabel, readLessLabel = _c === void 0 ? 'read less' : _c, maxCharacters = _a.maxCharacters, maxWords = _a.maxWords, maxLines = _a.maxLines, _d = _a.ellipsis, ellipsis = _d === void 0 ? '...' : _d, buttonClassName = _a.buttonClassName;
-    var _e = useState(false), isOpen = _e[0], setIsOpen = _e[1];
-    var _f = useState(''), text = _f[0], setText = _f[1];
-    var _g = useMaxLines(maxLines, isOpen, children, setText), readMoreRef = _g.readMoreRef, buttonRef = _g.buttonRef;
+    var _e = useState(false), showButton = _e[0], setShowButton = _e[1];
+    var _f = useState(false), isOpen = _f[0], setIsOpen = _f[1];
+    var _g = useState(''), text = _g[0], setText = _g[1];
+    var _h = useMaxLines(maxLines, isOpen, children, setText), readMoreRef = _h.readMoreRef, buttonRef = _h.buttonRef;
     useMaxCharacters(maxCharacters, isOpen, children, setText);
     useMaxWords(maxWords, isOpen, children, setText);
+    useEffect(function () {
+        if (isOpen || isAllText(text, children)) {
+            setShowButton(true);
+            return;
+        }
+        setShowButton(false);
+    }, [isOpen, text, maxLines, maxWords, maxCharacters]);
     var handleClick = function () {
         setIsOpen(function (v) { return !v; });
     };
     var getLabel = isOpen ? readLessLabel : readMoreLabel;
     return (React.createElement("div", { ref: readMoreRef, "data-testid": "wrapper" },
         text,
-        React.createElement("span", { ref: buttonRef, "data-testid": "button-wrapper" },
+        showButton && (React.createElement("span", { ref: buttonRef, "data-testid": "button-wrapper" },
             ellipsis,
-            React.createElement("button", { "data-testid": "button", className: classNames('button', buttonClassName), type: "button", onClick: handleClick }, getLabel))));
+            React.createElement("button", { "data-testid": "button", className: classnames('button', buttonClassName), type: "button", onClick: handleClick }, getLabel)))));
 };export default ReadMore;

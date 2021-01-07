@@ -1,6 +1,6 @@
 {
   "name": "@sstraatemans/react-readmore",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "a fully customizable read more component for React",
   "author": "Steven Straatemans <steven@straatemans.nl>",
   "license": "MIT",
@@ -24,8 +24,7 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "classnames": "^2.0.0"
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
