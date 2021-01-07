@@ -24,33 +24,34 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     useMaxWords(maxWords, isOpen, children, setText);
 
     useEffect(() => {
-        if (text && text.length <= children.length) {
+        if (isOpen || (text && text.trim().length < children.trim().length)) {
             setShowButton(true);
             return;
         }
         setShowButton(false);
-    }, [text]);
+    }, [isOpen, text, maxLines, maxWords, maxCharacters]);
 
     const handleClick = () => {
         setIsOpen((v) => !v);
     };
 
     const getLabel = isOpen ? readLessLabel : readMoreLabel;
-
     return (
         <div ref={readMoreRef} data-testid="wrapper">
             {text}
-            <span ref={buttonRef} data-testid="button-wrapper">
-                {ellipsis}
-                <button
-                    data-testid="button"
-                    className={classNames('button', buttonClassName)}
-                    type="button"
-                    onClick={handleClick}
-                >
-                    {getLabel}
-                </button>
-            </span>
+            {showButton && (
+                <span ref={buttonRef} data-testid="button-wrapper">
+                    {ellipsis}
+                    <button
+                        data-testid="button"
+                        className={classNames('button', buttonClassName)}
+                        type="button"
+                        onClick={handleClick}
+                    >
+                        {getLabel}
+                    </button>
+                </span>
+            )}
         </div>
     );
 };
