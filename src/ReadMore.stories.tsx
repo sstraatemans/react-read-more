@@ -91,7 +91,7 @@ MaxLines.argTypes = {
     },
 };
 MaxLines.args = {
-    maxLines: 3,
+    maxLines: 5,
 };
 
 export const ChooseClassName: iStory = Template.bind({});

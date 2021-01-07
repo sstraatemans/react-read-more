@@ -6,6 +6,13 @@ import ReadMore from '.';
 import { Text } from './Text';
 
 describe('ReadMore Component', () => {
+    it('should not show the readmore button and NO ellipsis when the text is completly shown', () => {
+        const { queryByTestId } = render(<ReadMore maxCharacters={20}>abcdefghijklmnip</ReadMore>);
+
+        expect(screen.getByTestId('wrapper')).toHaveTextContent('abcdefghijklmnip');
+        expect(queryByTestId('button')).toBeNull();
+    });
+
     it('should show the correct text when maxLines', () => {
         render(<ReadMore maxLines={2}>{Text}</ReadMore>);
 
