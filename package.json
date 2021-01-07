@@ -1,8 +1,15 @@
 {
-  "name": "@sstraatemans/react-readmore",
+  "name": "react-readmore-component",
   "version": "1.0.0",
   "description": "a fully customizable read more component for React",
-  "main": "index.ts",
+  "author": "Steven Straatemans <steven@straatemans.nl>",
+  "license": "MIT",
+  "homepage": "https://react-read-more.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sstraatemans/react-read-more.git"
+  },
+  "main": "dist/index.js",
   "scripts": {
     "build:ts": "npx rollup -c --compact --minifyInternalExports",
     "start": "start-storybook",
@@ -12,10 +19,9 @@
     "jest:watch": "jest --watch",
     "jest:coverage": "jest --coverage --collectCoverageFrom='[\"src/**/*.{ts,tsx}\",\"!src/**/*.stories.*\"]'",
     "lint": "eslint . --cache --ext js,jsx,ts,tsx",
-    "test": "npm run lint && npm run typecheck && npm run jest"
+    "test": "npm run lint && npm run typecheck && npm run jest",
+    "prepublishOnly": "npm run build:ts"
   },
-  "author": "Steven Straatemans <steven@straatemans.nl>",
-  "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
