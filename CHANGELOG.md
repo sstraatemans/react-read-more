@@ -8,6 +8,16 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [semantic versioning]: http://semver.org/
 [keep a changelog]: http://keepachangelog.com/
 
+## [1.0.4] - 2021-01-10
+
+### CHANGED
+
+-   remove ellipsis when opened.
+
+### FIXED
+
+-   making the check for the readmore work better. without removing the element
+
 ## [1.0.3] - 2021-01-07
 
 ### FIXED

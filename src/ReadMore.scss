@@ -1,3 +1,11 @@
+.button-wrapper {
+    white-space: nowrap;
+
+    &[data-visible='false'] {
+        visibility: hidden;
+    }
+}
+
 .button {
     border: 0;
     background-color: transparent;

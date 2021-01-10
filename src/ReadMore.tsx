@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { useMaxCharacters } from './hooks/useMaxCharacters';
 import { useMaxWords } from './hooks/useMaxWords';
@@ -17,17 +17,24 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
     ellipsis = '...',
     buttonClassName,
 }) => {
+    // remove all kinds of extra spaces in the string
+    const cleanedChildren = useMemo(() => {
+        return children.replace(/\s+/g, ' ').trim();
+    }, [children]);
     const [isOpen, setIsOpen] = useState(false);
+    const [showButton, setShowButton] = useState(false);
     const [text, setText] = useState<string>('');
-    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, children, setText);
-    useMaxCharacters(maxCharacters, isOpen, children, setText);
-    useMaxWords(maxWords, isOpen, children, setText);
+    const { readMoreRef, buttonRef } = useMaxLines(maxLines, isOpen, cleanedChildren, setText);
+    useMaxCharacters(maxCharacters, isOpen, cleanedChildren, setText);
+    useMaxWords(maxWords, isOpen, cleanedChildren, setText);
 
     useEffect(() => {
-        if (!isOpen && isAllText(text, children)) {
-            buttonRef.current?.parentElement.removeChild(buttonRef.current);
+        if (!isOpen && isAllText(text, cleanedChildren)) {
+            setShowButton(false);
+        } else {
+            setShowButton(true);
         }
-    }, [text, maxLines, maxWords, maxCharacters]);
+    }, [text]);
 
     const handleClick = () => {
         setIsOpen((v) => !v);
@@ -38,8 +45,13 @@ const ReadMore: React.FC<PropsWithChildren<iProps>> = ({
         <div ref={readMoreRef} data-testid="wrapper">
             {text}
 
-            <span ref={buttonRef} data-testid="button-wrapper">
-                {ellipsis}
+            <span
+                className="button-wrapper"
+                data-visible={showButton}
+                ref={buttonRef}
+                data-testid="button-wrapper"
+            >
+                {!isOpen && ellipsis}
                 <button
                     data-testid="button"
                     className={classNames('button', buttonClassName)}
