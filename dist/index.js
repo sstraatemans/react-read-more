@@ -1,4 +1,4 @@
-import React,{useEffect,useRef,useState}from'react';var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+import React,{useEffect,useRef,useMemo,useState}from'react';var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn) {
   var module = { exports: {} };
@@ -48,10 +48,10 @@ var classnames = createCommonjsModule(function (module) {
                 setText(children);
             }
             else {
-                setText(children.trim().substring(0, maxCharacters));
+                setText(children.substring(0, maxCharacters));
             }
         }
-    }, [maxCharacters, isOpen]);
+    }, [maxCharacters, isOpen, children]);
 };var useMaxWords = function (maxWords, isOpen, children, setText) {
     useEffect(function () {
         if (maxWords) {
@@ -59,11 +59,8 @@ var classnames = createCommonjsModule(function (module) {
                 setText(children);
             }
             else {
-                var wordsArray = children
-                    .trim()
-                    .split(' ')
-                    .filter(function (c) { return c !== ''; });
-                setText(wordsArray.slice(0, maxWords).join(' ').trim());
+                var wordsArray = children.split(' ').filter(function (c) { return c !== ''; });
+                setText(wordsArray.slice(0, maxWords).join(' '));
             }
         }
     }, [maxWords, isOpen, children]);
@@ -337,37 +334,38 @@ var debounce_1 = debounce;var useMaxLines = function (maxLines, isOpen, children
   } else {
     style.appendChild(document.createTextNode(css));
   }
-}var css_248z = ".button {\n  border: 0;\n  background-color: transparent;\n  text-decoration: underline;\n  cursor: pointer; }\n  .button::first-letter {\n    text-transform: uppercase; }\n  .button:hover {\n    text-decoration: none; }\n";
+}var css_248z = ".button-wrapper {\n  white-space: nowrap; }\n  .button-wrapper[data-visible='false'] {\n    visibility: hidden; }\n\n.button {\n  border: 0;\n  background-color: transparent;\n  text-decoration: underline;\n  cursor: pointer; }\n  .button::first-letter {\n    text-transform: uppercase; }\n  .button:hover {\n    text-decoration: none; }\n";
 styleInject(css_248z);var isAllText = function (truncatedText, text) {
     return (truncatedText &&
-        truncatedText
-            .trim()
-            .split('')
-            .filter(function (c) { return c !== ' '; }).length ===
-            text
-                .trim()
-                .split('')
-                .filter(function (c) { return c !== ' '; }).length);
+        truncatedText.split('').filter(function (c) { return c !== ' '; }).length ===
+            text.split('').filter(function (c) { return c !== ' '; }).length);
 };var ReadMore = function (_a) {
     var children = _a.children, _b = _a.readMoreLabel, readMoreLabel = _b === void 0 ? 'read more' : _b, _c = _a.readLessLabel, readLessLabel = _c === void 0 ? 'read less' : _c, maxCharacters = _a.maxCharacters, maxWords = _a.maxWords, maxLines = _a.maxLines, _d = _a.ellipsis, ellipsis = _d === void 0 ? '...' : _d, buttonClassName = _a.buttonClassName;
+    // remove all kinds of extra spaces in the string
+    var cleanedChildren = useMemo(function () {
+        return children.replace(/\s+/g, ' ').trim();
+    }, [children]);
     var _e = useState(false), isOpen = _e[0], setIsOpen = _e[1];
-    var _f = useState(''), text = _f[0], setText = _f[1];
-    var _g = useMaxLines(maxLines, isOpen, children, setText), readMoreRef = _g.readMoreRef, buttonRef = _g.buttonRef;
-    useMaxCharacters(maxCharacters, isOpen, children, setText);
-    useMaxWords(maxWords, isOpen, children, setText);
+    var _f = useState(false), showButton = _f[0], setShowButton = _f[1];
+    var _g = useState(''), text = _g[0], setText = _g[1];
+    var _h = useMaxLines(maxLines, isOpen, cleanedChildren, setText), readMoreRef = _h.readMoreRef, buttonRef = _h.buttonRef;
+    useMaxCharacters(maxCharacters, isOpen, cleanedChildren, setText);
+    useMaxWords(maxWords, isOpen, cleanedChildren, setText);
     useEffect(function () {
-        var _a;
-        if (!isOpen && isAllText(text, children)) {
-            (_a = buttonRef.current) === null || _a === void 0 ? void 0 : _a.parentElement.removeChild(buttonRef.current);
+        if (!isOpen && isAllText(text, cleanedChildren)) {
+            setShowButton(false);
         }
-    }, [text, maxLines, maxWords, maxCharacters]);
+        else {
+            setShowButton(true);
+        }
+    }, [text]);
     var handleClick = function () {
         setIsOpen(function (v) { return !v; });
     };
     var getLabel = isOpen ? readLessLabel : readMoreLabel;
     return (React.createElement("div", { ref: readMoreRef, "data-testid": "wrapper" },
         text,
-        React.createElement("span", { ref: buttonRef, "data-testid": "button-wrapper" },
-            ellipsis,
+        React.createElement("span", { className: "button-wrapper", "data-visible": showButton, ref: buttonRef, "data-testid": "button-wrapper" },
+            !isOpen && ellipsis,
             React.createElement("button", { "data-testid": "button", className: classnames('button', buttonClassName), type: "button", onClick: handleClick }, getLabel))));
 };export default ReadMore;
