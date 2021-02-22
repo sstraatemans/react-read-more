@@ -62,8 +62,9 @@ export const useMaxLines = (
     };
 
     useEffect(() => {
+        const debouncedCreateMaxLines = debounce(createMaxLines, 300)
         if (maxLines) {
-            window.addEventListener('resize', debounce(createMaxLines, 300));
+            window.addEventListener('resize', debouncedCreateMaxLines);
             if (isOpen) {
                 setText(children);
             } else {
@@ -71,7 +72,7 @@ export const useMaxLines = (
             }
         }
         return () => {
-            if (maxLines) window.removeEventListener('resize', debounce(createMaxLines, 300));
+            if (maxLines) window.removeEventListener('resize', debouncedCreateMaxLines);
         };
     }, [maxLines, isOpen]);
 
