@@ -8,6 +8,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [semantic versioning]: http://semver.org/
 [keep a changelog]: http://keepachangelog.com/
 
+## [1.0.5] - 2021-02-22
+
+### FIXED
+
+-   fixed cleanup of eventlisterners for Maxlines
+
 ## [1.0.4] - 2021-01-10
 
 ### CHANGED
